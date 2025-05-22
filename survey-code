@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Scary Survey</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #121212;
+      color: #eee;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      margin-bottom: 10px;
+      color: #ff5555;
+      text-shadow: 0 0 10px #ff0000;
+    }
+    .question-box {
+      background: #222;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 600px;
+      width: 100%;
+      box-shadow: 0 0 15px #ff0000aa;
+    }
+    .question-text {
+      font-size: 1.2rem;
+      margin-bottom: 15px;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      font-size: 1rem;
+      border-radius: 5px;
+      border: none;
+      margin-bottom: 15px;
+    }
+    button {
+      background: #ff4444;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    button:hover {
+      background: #cc3333;
+    }
+    .progress {
+      margin-top: 10px;
+      font-size: 0.9rem;
+      color: #aaa;
+    }
+  </style>
+</head>
+<body>
+  <h1>Scary Survey</h1>
+  <div class="question-box">
+    <div class="question-text" id="question"></div>
+    <input type="text" id="answer" placeholder="Type your answer here" />
+    <button id="nextBtn">Next</button>
+    <div class="progress" id="progress"></div>
+  </div>
+
+  <script>
+    // Questions start easy and get harder
+    const questions = [
+      { q: "What is your name?", difficulty: "Easy" },
+      { q: "How old are you?", difficulty: "Easy" },
+      { q: "What is your favorite color?", difficulty: "Easy" },
+      { q: "Name a scary movie you like.", difficulty: "Medium" },
+      { q: "Have you ever been scared at night?", difficulty: "Medium" },
+      { q: "What would you do if you heard footsteps behind you?", difficulty: "Medium" },
+      { q: "Describe your worst nightmare.", difficulty: "Hard" },
+      { q: "What is the scariest thing you have ever experienced?", difficulty: "Hard" },
+      { q: "If you saw a ghost, what would you say?", difficulty: "Hard" }
+    ];
+
+    let currentQuestion = 0;
+    const questionElem = document.getElementById("question");
+    const answerInput = document.getElementById("answer");
+    const nextBtn = document.getElementById("nextBtn");
+    const progressElem = document.getElementById("progress");
+
+    function showQuestion() {
+      if (currentQuestion < questions.length) {
+        questionElem.textContent = `[${questions[currentQuestion].difficulty}] ${questions[currentQuestion].q}`;
+        answerInput.value = "";
+        answerInput.focus();
+        progressElem.textContent = `Question ${currentQuestion + 1} of ${questions.length}`;
+      } else {
+        questionElem.textContent = "Thank you for completing the Scary Survey!";
+        answerInput.style.display = "none";
+        nextBtn.style.display = "none";
+        progressElem.textContent = "";
+      }
+    }
+
+    nextBtn.addEventListener("click", () => {
+      if (answerInput.value.trim() === "") {
+        alert("Please answer the question before proceeding.");
+        return;
+      }
+      // Here you could store the answer if you want
+
+      currentQuestion++;
+      showQuestion();
+    });
+
+    // Initial load
+    showQuestion();
+  </script>
+</body>
+</html>
